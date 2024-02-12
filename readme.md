@@ -11,7 +11,7 @@
 <br/>
 
 <div align="center">
-    <img src="./.github/readme.gif" alt="project gif" height="400px"/>
+    <img src="./.github/readme.png" alt="project image" height="400px"/>
 </div>
 
 <br/><hr/>
