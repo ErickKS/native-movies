@@ -4,7 +4,7 @@ import { useLocalSearchParams, useNavigation } from "expo-router";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
-import { fetchMovieCredits, fetchMovieDetails, fetchSimilarMovies, image500 } from "@/api/movies";
+import { fetchMovieData, image500 } from "@/api/movies";
 import { MovieDetailsProps } from "@/types/movie-details";
 import { MovieCastProps } from "@/types/movie-cast";
 import { MoviesProps } from "@/types/movies";
@@ -24,36 +24,32 @@ export default function MoviePage() {
   const [movie, setMovie] = useState<MovieDetailsProps | null>(null);
   const [cast, setCast] = useState<MovieCastProps[]>([]);
   const [similarMovies, setSimilarMovies] = useState<MoviesProps[]>([]);
+
   const [isFavorite, setIsFavorite] = useState(false);
   const [showFullDescription, setShowFullDescription] = useState(false);
-
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getMoviesDetails();
-    getMoviesCredits();
-    getSimilarMovies();
+    getMovieData();
   }, []);
 
-  async function getMoviesDetails() {
-    const data = await fetchMovieDetails(id);
+  async function getMovieData() {
+    try {
+      const [details, credits, similar] = await Promise.all([
+        fetchMovieData(id, ""),
+        fetchMovieData(id, "/credits"),
+        fetchMovieData(id, "/similar"),
+      ]);
 
-    if (data) {
-      setLoading(false);
-      setMovie(data);
+      if (details && credits && similar) {
+        setMovie(details);
+        setCast(credits.cast);
+        setSimilarMovies(similar.results);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error("Error fetching movie data:", error);
     }
-  }
-
-  async function getMoviesCredits() {
-    const data = await fetchMovieCredits(id);
-
-    if (data) setCast(data.cast);
-  }
-
-  async function getSimilarMovies() {
-    const data = await fetchSimilarMovies(id);
-
-    if (data) setSimilarMovies(data.results);
   }
 
   function handleToggleFavorite() {
