@@ -1,14 +1,15 @@
-import { Feather } from "@expo/vector-icons";
-import { useNavigation } from "expo-router";
+import { useState } from "react";
 import { Alert, Image, ScrollView, TextInput, TouchableOpacity, View } from "react-native";
+import { useNavigation } from "expo-router";
+import { Feather } from "@expo/vector-icons";
 
 import { SearchMovieCard } from "@/components/search-movie-card";
-
-import colors from "tailwindcss/colors";
-import { useState } from "react";
 import { Loading } from "@/components/loading";
+
 import { searchMovies } from "@/api/movies";
 import { MoviesProps } from "@/types/movies";
+
+import colors from "tailwindcss/colors";
 
 export default function Search() {
   const router = useNavigation();
@@ -39,7 +40,7 @@ export default function Search() {
   }
 
   return (
-    <View className="flex-1 mx-5">
+    <View className="flex-1 px-5 bg-neutral-900">
       <View className="flex-row items-center mt-5">
         <TouchableOpacity
           onPress={() => router.goBack()}

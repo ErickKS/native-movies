@@ -11,9 +11,9 @@ import { MoviesProps } from "@/types/movies";
 
 import { Cast } from "@/components/cast";
 import { Loading } from "@/components/loading";
+import { ListMovies } from "@/components/list-movies";
 
 import colors from "tailwindcss/colors";
-import { ListMovies } from "@/components/list-movies";
 
 const { width, height } = Dimensions.get("window");
 
@@ -77,7 +77,7 @@ export default function MoviePage() {
   }
 
   return (
-    <View className="flex-1">
+    <View className="flex-1 bg-neutral-900">
       {loading ? (
         <View className="flex-1 justify-center items-center">
           <Loading />

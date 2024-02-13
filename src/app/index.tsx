@@ -36,7 +36,7 @@ export default function Home() {
   }
 
   return (
-    <View className="flex-1">
+    <View className="flex-1 bg-neutral-900">
       <ScrollView showsVerticalScrollIndicator={false}>
         <Header />
 
